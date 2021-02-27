@@ -2,7 +2,7 @@ package com.web_service.springchat.model.utilisateurDB;
 
 public class Utilisateur {
     private int id;
-    private String nom, prenom, mail, password;
+    private String nom, prenom, mail, password, token;
 
     public int getId() {
         return id;
@@ -42,5 +42,13 @@ public class Utilisateur {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

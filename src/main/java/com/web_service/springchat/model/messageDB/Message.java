@@ -1,11 +1,14 @@
 package com.web_service.springchat.model.messageDB;
 
+import com.web_service.springchat.model.utilisateurDB.Utilisateur;
+
 import java.sql.Date;
 
 public class Message {
     private int id, id_sender, id_receiver, etat;
     private String message;
     private Date date_save, date_mode, date_lecture;
+    private Utilisateur utilisateur;
 
     public int getId() {
         return id;
@@ -69,5 +72,13 @@ public class Message {
 
     public void setDate_lecture(Date date_lecture) {
         this.date_lecture = date_lecture;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 }

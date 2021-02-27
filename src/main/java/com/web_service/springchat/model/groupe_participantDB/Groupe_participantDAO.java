@@ -22,17 +22,17 @@ public class Groupe_participantDAO extends DAO<Groupe_participant> {
     }
 
     @Override
-    public boolean create(Groupe_participant Obj) {
-        return false;
+    public int create(Groupe_participant Obj) {
+        return 0;
     }
 
     @Override
-    public boolean update(Groupe_participant Obj) {
-        return false;
+    public int update(Groupe_participant Obj) {
+        return 0;
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public int delete(int id) {
+        return 0;
     }
 }

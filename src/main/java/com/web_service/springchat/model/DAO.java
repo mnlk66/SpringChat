@@ -10,7 +10,7 @@ public abstract class DAO<T> {
 
     public abstract T get(int id);
     public abstract ArrayList<T> getAll(int id);
-    public abstract boolean create (T Obj);
-    public abstract boolean update (T Obj);
-    public abstract boolean delete (int id);
+    public abstract int create (T Obj);
+    public abstract int update (T Obj);
+    public abstract int delete (int id);
 }

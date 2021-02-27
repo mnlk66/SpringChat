@@ -5,7 +5,7 @@ import com.web_service.springchat.model.DAO;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-public class GroupeDAO  extends DAO<Groupe> {
+public class GroupeDAO extends DAO<Groupe> {
     public GroupeDAO(Connection c) {
         super(c);
     }
@@ -21,17 +21,17 @@ public class GroupeDAO  extends DAO<Groupe> {
     }
 
     @Override
-    public boolean create(Groupe Obj) {
-        return false;
+    public int create(Groupe Obj) {
+        return 0;
     }
 
     @Override
-    public boolean update(Groupe Obj) {
-        return false;
+    public int update(Groupe Obj) {
+        return 0;
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public int delete(int id) {
+        return 0;
     }
 }
