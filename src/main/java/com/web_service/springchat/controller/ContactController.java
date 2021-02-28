@@ -122,7 +122,7 @@ public class ContactController {
         }
         return gson.toJson(map);
     }
-    @CrossOrigin(origins = "*")
+
     @GetMapping(value = "/contact", produces = "application/json")
     public String getContact( @RequestHeader String Authorization){
         final GsonBuilder builder = new GsonBuilder();
