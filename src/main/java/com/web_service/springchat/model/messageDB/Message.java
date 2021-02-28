@@ -5,7 +5,7 @@ import com.web_service.springchat.model.utilisateurDB.Utilisateur;
 import java.sql.Date;
 
 public class Message {
-    private int id, id_sender, id_receiver, etat;
+    private int id, id_sender, id_receiver, etat, id_discussion;
     private String message;
     private Date date_save, date_mode, date_lecture;
     private Utilisateur utilisateur;
@@ -72,6 +72,14 @@ public class Message {
 
     public void setDate_lecture(Date date_lecture) {
         this.date_lecture = date_lecture;
+    }
+
+    public int getId_discussion() {
+        return id_discussion;
+    }
+
+    public void setId_discussion(int id_discussion) {
+        this.id_discussion = id_discussion;
     }
 
     public Utilisateur getUtilisateur() {

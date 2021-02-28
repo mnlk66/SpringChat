@@ -1,10 +1,20 @@
 package com.web_service.springchat.model.contact;
 
+import com.web_service.springchat.model.messageDB.Message;
 import com.web_service.springchat.model.utilisateurDB.Utilisateur;
 
 public class Contact {
-    private int id, id_user, id_contact;
+    private int id, id_user, id_contact, id_discussion;
     private Utilisateur utilisateur;
+    private Message lastMessage;
+
+    public Message getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(Message lastMessage) {
+        this.lastMessage = lastMessage;
+    }
 
     public int getId() {
         return id;
@@ -28,6 +38,14 @@ public class Contact {
 
     public void setId_contact(int id_contact) {
         this.id_contact = id_contact;
+    }
+
+    public int getId_discussion() {
+        return id_discussion;
+    }
+
+    public void setId_discussion(int id_discussion) {
+        this.id_discussion = id_discussion;
     }
 
     public Utilisateur getUtilisateur() {

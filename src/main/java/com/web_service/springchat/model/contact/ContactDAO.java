@@ -18,7 +18,7 @@ public class ContactDAO extends DAO<Contact> {
     public Contact get(int id) {
         Contact c = new Contact();
         try {
-            String sql = "SELECT c.id, c.id_contact, u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_user=u.idUser WHERE id="+id+";";
+            String sql = "SELECT c.id_discussion, c.id, c.id_contact, u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_user=u.idUser WHERE id="+id+";";
             ResultSet rslt = connect.createStatement().executeQuery(sql);
             if (rslt.next()){
                 Utilisateur u = new Utilisateur();
@@ -28,6 +28,7 @@ public class ContactDAO extends DAO<Contact> {
                 u.setMail(rslt.getString("mail"));
                 c.setId(rslt.getInt("id"));
                 c.setId_contact(rslt.getInt("id_contact"));
+                c.setId_discussion(rslt.getInt("id_discussion"));
                 c.setUtilisateur(u);
             }
         } catch (SQLException throwables) {
@@ -40,8 +41,10 @@ public class ContactDAO extends DAO<Contact> {
     public ArrayList<Contact> getAll(int id) {
         ArrayList<Contact> list = null;
         try {
-            String sql = "SELECT c.id, c.id_contact, u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_contact=u.idUser WHERE id_user="+id+";";
+            String sql = "SELECT c.id, c.id_contact, c.id_discussion,  u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_contact=u.idUser WHERE id_user="+id+";";
+            String sql2 = "SELECT c.id, c.id_contact, c.id_discussion,  u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_user=u.idUser WHERE id_contact="+id+";";
             ResultSet rslt = connect.createStatement().executeQuery(sql);
+            ResultSet rslt2 = connect.createStatement().executeQuery(sql2);
             list =  new ArrayList<>();
             while (rslt.next()){
                 Contact c = new Contact();
@@ -52,6 +55,20 @@ public class ContactDAO extends DAO<Contact> {
                 u.setMail(rslt.getString("mail"));
                 c.setId(rslt.getInt("id"));
                 c.setId_contact(rslt.getInt("id_contact"));
+                c.setId_discussion(rslt.getInt("id_discussion"));
+                c.setUtilisateur(u);
+                list.add(c);
+            }
+            while (rslt2.next()){
+                Contact c = new Contact();
+                Utilisateur u = new Utilisateur();
+
+                u.setNom(rslt2.getString("nom"));
+                u.setPrenom(rslt2.getString("prenom"));
+                u.setMail(rslt2.getString("mail"));
+                c.setId(rslt2.getInt("id"));
+                c.setId_contact(rslt2.getInt("id_contact"));
+                c.setId_discussion(rslt2.getInt("id_discussion"));
                 c.setUtilisateur(u);
                 list.add(c);
             }
@@ -67,11 +84,13 @@ public class ContactDAO extends DAO<Contact> {
             String sql_verif = "SELECT * FROM contact WHERE (id_user="+Obj.getId_user()+" AND id_contact="+Obj.getId_contact()+") OR (id_contact="+Obj.getId_user()+" AND id_user="+Obj.getId_contact()+");";
             ResultSet rslt_verif = connect.createStatement().executeQuery(sql_verif);
             if(rslt_verif.next()) return 1;
-            String sql = "INSERT INTO contact(id_user, id_contact) VALUES("+Obj.getId_user()+","+Obj.getId_contact()+")";
-            String sql_reverse = "INSERT INTO contact(id_user, id_contact) VALUES("+Obj.getId_contact()+","+Obj.getId_user()+")";
+            String sqlGet = "SELECT DISTINCT id_discussion FROM contact ORDER BY id_discussion DESC LIMIT 1;";
+            ResultSet rsGet = connect.createStatement().executeQuery(sqlGet);
+            int i = 1;
+            if (rsGet.next()) i = rsGet.getInt("id_discussion")+1;
+            String sql = "INSERT INTO contact(id_user, id_contact, id_discussion) VALUES("+Obj.getId_user()+","+Obj.getId_contact()+","+i+");";
             int rslt = connect.createStatement().executeUpdate(sql);
-            int rslt_reverse = connect.createStatement().executeUpdate(sql_reverse);
-            return rslt > 0 && rslt_reverse > 0 ? 0 : 1;
+            return rslt > 0 ? 0 : 1;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return -1;

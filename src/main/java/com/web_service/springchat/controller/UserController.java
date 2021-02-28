@@ -23,10 +23,10 @@ public class UserController {
         boolean isConnect = false;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-//            String DBusername = "userAppent";
-//            String DBpassword = "userAppent";
-            String DBusername = "root";
-            String DBpassword = "";
+            String DBusername = "userAppent";
+            String DBpassword = "userAppent";
+//            String DBusername = "root";
+//            String DBpassword = "";
             String DBdatabase = "jdbc:mysql://localhost:3306/springchatdb?useTimezone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false";
             Connection con = DriverManager.getConnection(DBdatabase, DBusername, DBpassword);
             utilisateurDAO = new UtilisateurDAO(con);

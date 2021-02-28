@@ -24,10 +24,10 @@ public class MessageController {
         boolean isConnect = false;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-//            String DBusername = "userAppent";
-//            String DBpassword = "userAppent";
-            String DBusername = "root";
-            String DBpassword = "";
+            String DBusername = "userAppent";
+            String DBpassword = "userAppent";
+//            String DBusername = "root";
+//            String DBpassword = "";
             String DBdatabase = "jdbc:mysql://localhost:3306/springchatdb?useTimezone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false";
             Connection con = DriverManager.getConnection(DBdatabase, DBusername, DBpassword);
             messageDAO = new MessageDAO(con);
@@ -53,7 +53,6 @@ public class MessageController {
                 Claims decode = TokenJWT.decode(token);
                 Object sub = decode.get("sub");
                 Utilisateur us = gson.fromJson((String) sub, Utilisateur.class);
-                ownId = us.getId();
             } catch (Exception e) {
                 map.put("statut","-1");
                 map.put("message","token as been touched");
@@ -61,7 +60,7 @@ public class MessageController {
             }
 
 
-            ArrayList<Message> rep = messageDAO.getAll(ownId, id);
+            ArrayList<Message> rep = messageDAO.getAll(id);
             if(rep != null) {
                 map.put("statut","0");
                 map.put("data",rep);
