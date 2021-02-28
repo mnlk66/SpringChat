@@ -33,6 +33,8 @@ public class UserController {
         return isConnect;
     }
 
+
+    @CrossOrigin(origins = "*")
     @RequestMapping(value="/login", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public String connexion(@RequestParam("mail") String mail, @RequestParam("password") String password){
