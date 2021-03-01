@@ -114,13 +114,13 @@ public class ContactController {
             }
 
 
-            int rep = contactDAO.delete(ownId, id);
+            int rep = contactDAO.delete(id);
             if (rep == 0) {
-                map.put("statut", "0");
-                map.put("message", "Contact supprimé avec succès");
-            } else if (rep == 1) {
                 map.put("statut", "1");
                 map.put("message", "ne figure pas dans vos contact");
+            } else if (rep == 1) {
+                map.put("statut", "0");
+                map.put("message", "Contact supprimé avec succès");
             } else {
                 map.put("statut", "-1");
                 map.put("message", "something went wrong");

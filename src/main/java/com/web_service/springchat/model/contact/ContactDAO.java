@@ -41,10 +41,9 @@ public class ContactDAO extends DAO<Contact> {
     public ArrayList<Contact> getAll(int id) {
         ArrayList<Contact> list = null;
         try {
-            String sql = "SELECT c.id, c.id_contact, c.id_discussion,  u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_contact=u.idUser WHERE id_user="+id+";";
-            String sql2 = "SELECT c.id, c.id_contact, c.id_discussion,  u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_user=u.idUser WHERE id_contact="+id+";";
+            String sql = "(SELECT c.id, c.id_contact, c.id_discussion,  u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_contact=u.idUser WHERE id_user="+id+") UNION " +
+                    "(SELECT c.id, c.id_user as id_contact, c.id_discussion,  u.nom, u.prenom, u.mail FROM contact c JOIN utilisateur u ON c.id_user=u.idUser WHERE id_contact="+id+");";
             ResultSet rslt = connect.createStatement().executeQuery(sql);
-            ResultSet rslt2 = connect.createStatement().executeQuery(sql2);
             list =  new ArrayList<>();
             while (rslt.next()){
                 Contact c = new Contact();
@@ -53,22 +52,10 @@ public class ContactDAO extends DAO<Contact> {
                 u.setNom(rslt.getString("nom"));
                 u.setPrenom(rslt.getString("prenom"));
                 u.setMail(rslt.getString("mail"));
+                u.setId(rslt.getInt("id_discussion"));
                 c.setId(rslt.getInt("id"));
                 c.setId_contact(rslt.getInt("id_contact"));
                 c.setId_discussion(rslt.getInt("id_discussion"));
-                c.setUtilisateur(u);
-                list.add(c);
-            }
-            while (rslt2.next()){
-                Contact c = new Contact();
-                Utilisateur u = new Utilisateur();
-
-                u.setNom(rslt2.getString("nom"));
-                u.setPrenom(rslt2.getString("prenom"));
-                u.setMail(rslt2.getString("mail"));
-                c.setId(rslt2.getInt("id"));
-                c.setId_contact(rslt2.getInt("id_contact"));
-                c.setId_discussion(rslt2.getInt("id_discussion"));
                 c.setUtilisateur(u);
                 list.add(c);
             }
@@ -105,7 +92,7 @@ public class ContactDAO extends DAO<Contact> {
     @Override
     public int delete(int id) {
         try {
-            String sql = "DELETE FROM contact WHERE id="+id+";";
+            String sql = "DELETE FROM contact WHERE id_discussion="+id+";";
             return connect.createStatement().executeUpdate(sql);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
