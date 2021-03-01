@@ -75,7 +75,7 @@ public class UtilisateurDAO  extends DAO<Utilisateur> {
     @Override
     public int create(Utilisateur Obj) {
         try {
-            String sql = "SELECT * FROM utilisateur WHERE nom='"+Obj.getNom()+"' AND prenom='"+Obj.getPrenom()+"' AND mail='"+Obj.getMail()+"' AND password='"+Obj.getPassword()+"';";
+            String sql = "SELECT * FROM utilisateur WHERE  mail='"+Obj.getMail()+"';";
             ResultSet rslt = connect.createStatement().executeQuery(sql);
             if(rslt.next()) return 0;
             else {
