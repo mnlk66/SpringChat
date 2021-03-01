@@ -71,9 +71,9 @@ public class MessageDAO  extends DAO<Message> {
     @Override
     public int create(Message Obj) {
         try {
-            String sql = "INSERT INTO messages(id_sender, id_receiver, message, id_discussion) VALUES("+Obj.getId_sender()+","+Obj.getId_receiver()+","+Obj.getMessage()+","+Obj.getId_discussion()+");";
+            String sql = "INSERT INTO messages(id_sender, id_receiver, message, id_discussion) VALUES("+Obj.getId_sender()+","+Obj.getId_receiver()+",'"+Obj.getMessage()+"',"+Obj.getId_discussion()+");";
             int rslt = connect.createStatement().executeUpdate(sql);
-            return rslt > 0 ? 0 : 1;
+            return rslt;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return -1;

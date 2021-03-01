@@ -72,16 +72,25 @@ public class MessageController {
         return gson.toJson(map);
     }
 
-    public boolean enregistrerMessage(int id_sender, int id_receiver, String message){
-        if(StartConnection() && id_sender != id_receiver) {
-            Message m = new Message();
-            m.setId_receiver(id_sender);
-            m.setId_receiver(id_receiver);
-            m.setMessage(message);
+    @PostMapping(value = "/message", produces = "application/json")
+    public String enregistrerMessage(@RequestBody Message m){
+        final GsonBuilder builder = new GsonBuilder();
+        final Gson gson = builder.create();
+        Map<String, Object> map = new HashMap<>();
+        if(StartConnection() && m.getId_sender() != m.getId_receiver()) {
             int i = messageDAO.create(m);
-            return i > 0;
+            if (i == 0) {
+                map.put("statut", "1");
+                map.put("message", "échec envoie");
+            } else if (i == 1) {
+                map.put("statut", "0");
+                map.put("message", "message envoyé");
+            } else {
+                map.put("statut", "-1");
+                map.put("message", "something went wrong");
+            }
         }
-        return false;
+        return gson.toJson(map);
     }
 
     public boolean supprimerMessage(int id){
