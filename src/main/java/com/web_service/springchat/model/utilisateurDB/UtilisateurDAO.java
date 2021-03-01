@@ -23,7 +23,7 @@ public class UtilisateurDAO  extends DAO<Utilisateur> {
                 u.setPrenom(rslt.getString("prenom"));
                 u.setNom(rslt.getString("nom"));
                 u.setMail(rslt.getString("mail"));
-                u.setId(rslt.getInt("idUser"));
+                u.setId(rslt.getInt("id"));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
